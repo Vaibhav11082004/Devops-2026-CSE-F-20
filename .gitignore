@@ -25,3 +25,16 @@ dist-ssr
 .venv
 Devops-2026-CSE-F-20*
 .vscode
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Database files
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+sentinel.db*
+

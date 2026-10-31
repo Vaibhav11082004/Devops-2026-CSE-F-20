@@ -99,7 +99,7 @@ docker compose up -d --build
 | **SentinelAI Web App** | [http://localhost](http://localhost) | Use One-Click Demo Login |
 | **Backend API Health** | [http://localhost:5000/api/v1/health](http://localhost:5000/api/v1/health) | API Status & Diagnostics |
 | **Prometheus Telemetry** | [http://localhost:9090](http://localhost:9090) | Targets: `backend:5000/metrics` |
-| **Grafana Dashboard** | [http://localhost:3000](http://localhost:3000) | `admin` / `sentinel` |
+| **Grafana Dashboard** | [http://localhost:3100](http://localhost:3100) | `admin` / `sentinel` |
 
 ---
 

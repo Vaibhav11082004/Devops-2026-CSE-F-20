@@ -1,0 +1,17 @@
+global:
+  scrape_interval: 5s
+  evaluation_interval: 5s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'sentinel-core-api'
+    metrics_path: '/metrics'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['backend:5000', 'host.docker.internal:5000']
+        labels:
+          environment: 'production'
+          service: 'sentinel-api'

@@ -1,6 +1,8 @@
 import { Router, Request, Response } from 'express';
 import { dbAll, dbGet, dbRun } from '../db/database.js';
 import { authenticateToken } from '../middleware/auth.js';
+import { broadcastIncidentResolved } from '../socket.js';
+import { threatsBlockedCounter, activeIncidentsGauge } from '../monitoring/metrics.js';
 
 const router = Router();
 
@@ -101,6 +103,8 @@ router.post('/incidents/:id/resolve', authenticateToken, async (req: Request, re
     }
 
     await dbRun("UPDATE incidents SET status = 'mitigated' WHERE id = ?", [id]);
+    broadcastIncidentResolved(id);
+    threatsBlockedCounter.inc({ vector: 'Incident Containment', severity: 'critical' });
 
     res.json({
       success: true,

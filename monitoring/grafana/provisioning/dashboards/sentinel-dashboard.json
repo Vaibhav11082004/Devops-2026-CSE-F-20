@@ -1,0 +1,152 @@
+{
+  "annotations": { "list": [] },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": true,
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "id": 1,
+      "title": "SentinelAI Enterprise Telemetry & Security Overview",
+      "type": "row"
+    },
+    {
+      "id": 2,
+      "title": "Security Posture Score",
+      "type": "gauge",
+      "gridPos": { "h": 6, "w": 6, "x": 0, "y": 1 },
+      "targets": [
+        {
+          "datasource": "Prometheus",
+          "expr": "sentinel_security_score",
+          "legendFormat": "Compliance Score",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "min": 0,
+          "max": 100,
+          "unit": "percent",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "orange", "value": 75 },
+              { "color": "green", "value": 90 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 3,
+      "title": "Active Security Incidents",
+      "type": "stat",
+      "gridPos": { "h": 6, "w": 6, "x": 6, "y": 1 },
+      "targets": [
+        {
+          "datasource": "Prometheus",
+          "expr": "sentinel_active_incidents",
+          "legendFormat": "Active Vectors",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "orange", "value": 3 },
+              { "color": "red", "value": 5 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 4,
+      "title": "Active AI Neural Agents",
+      "type": "stat",
+      "gridPos": { "h": 6, "w": 6, "x": 12, "y": 1 },
+      "targets": [
+        {
+          "datasource": "Prometheus",
+          "expr": "sentinel_active_agents",
+          "legendFormat": "Online Neural Agents",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": { "fixedColor": "cyan", "mode": "fixed" }
+        }
+      }
+    },
+    {
+      "id": 5,
+      "title": "Total Cyber Threats Neutralized",
+      "type": "stat",
+      "gridPos": { "h": 6, "w": 6, "x": 18, "y": 1 },
+      "targets": [
+        {
+          "datasource": "Prometheus",
+          "expr": "sum(sentinel_threats_blocked_total)",
+          "legendFormat": "Threats Blocked",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": { "fixedColor": "purple", "mode": "fixed" }
+        }
+      }
+    },
+    {
+      "id": 6,
+      "title": "API Request Throughput (Req/Sec)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 7 },
+      "targets": [
+        {
+          "datasource": "Prometheus",
+          "expr": "sum(rate(sentinel_http_requests_total[1m])) by (status_code)",
+          "legendFormat": "Status {{status_code}}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "95th Percentile Response Latency",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 7 },
+      "targets": [
+        {
+          "datasource": "Prometheus",
+          "expr": "histogram_quantile(0.95, sum(rate(sentinel_http_request_duration_seconds_bucket[1m])) by (le))",
+          "legendFormat": "p95 Latency",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        }
+      }
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": ["sentinel", "security", "telemetry"],
+  "time": { "from": "now-15m", "to": "now" },
+  "timezone": "browser",
+  "title": "SentinelAI - Telemetry & Security Dashboard"
+}

@@ -33,7 +33,6 @@ services:
     name: sentinel-frontend
     runtime: static
     rootDir: .
-    plan: free
     buildCommand: npm install && npm run build
     staticPublishPath: ./dist
     routes:

@@ -29,14 +29,14 @@ services:
   # -----------------------------------------------------------------------
   # 2. Frontend Static Site (React 19 + Vite + Tailwind CSS + SPA Router)
   # -----------------------------------------------------------------------
-  - type: static
+  - type: web
     name: sentinel-frontend
     runtime: static
     rootDir: .
     plan: free
     region: oregon
     buildCommand: npm install && npm run build
-    publishDir: dist
+    staticPublishPath: ./dist
     routes:
       - type: rewrite
         source: /*

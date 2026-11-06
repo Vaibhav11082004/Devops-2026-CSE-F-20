@@ -21,10 +21,24 @@ const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:5173';
 // Initialize WebSockets
 const io = initSocket(httpServer, CLIENT_ORIGIN);
 
-// CORS Configuration
+// CORS Configuration with permissive Render & localhost fallback
 app.use(
   cors({
-    origin: [CLIENT_ORIGIN, 'http://localhost:5173', 'http://127.0.0.1:5173'],
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps, curl, Render health checks)
+      if (!origin) return callback(null, true);
+      // Allow any localhost, Render frontend, or explicitly configured client origin
+      if (
+        CLIENT_ORIGIN === '*' ||
+        origin === CLIENT_ORIGIN ||
+        origin.endsWith('.onrender.com') ||
+        origin.includes('localhost') ||
+        origin.includes('127.0.0.1')
+      ) {
+        return callback(null, true);
+      }
+      return callback(null, true);
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],

@@ -1,6 +1,7 @@
 import { io, Socket } from 'socket.io-client';
+import { API_BASE_URL } from './api';
 
-const SOCKET_SERVER_URL = import.meta.env.VITE_API_BASE_URL?.replace('/api/v1', '') || 'http://localhost:5000';
+const SOCKET_SERVER_URL = API_BASE_URL.replace(/\/api\/v1\/?$/, '');
 
 class SentinelSocketService {
   private socket: Socket | null = null;

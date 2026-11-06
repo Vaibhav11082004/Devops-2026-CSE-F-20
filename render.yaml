@@ -34,7 +34,6 @@ services:
     runtime: static
     rootDir: .
     plan: free
-    region: oregon
     buildCommand: npm install && npm run build
     staticPublishPath: ./dist
     routes:
